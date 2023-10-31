@@ -22,7 +22,7 @@ function App() {
         <div className={"list"}>
             <h4>{title[0]} <span onClick={() => {
                 변경(따봉 + 1)
-            }}>👍</span>{따봉}asd</h4>
+            }}>👍</span>{따봉}asasdd</h4>
             <button onClick={() => {
                 b(['여자 코트 추천',title[1],title[2]])
             }}>클릭
