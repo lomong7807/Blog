@@ -9,8 +9,8 @@ function App() {
     let [title, setTitle] = useState(['남자 코트 추천', '강남 우동 맛집', '파이썬독학']);
     let [따봉, 변경] = useState([0, 0, 0]);
     let [modal, setModal] = useState(false);
-    let [checkNum, setCheckNum] = useState(0)
-
+    let [checkNum, setCheckNum] = useState(0);
+    let [insert, setInsert] = useState('');
 
 
     function 함수() {
@@ -57,25 +57,45 @@ function App() {
         </div>*/}
 
         {title.map(function (a, i) {
-            return (<><div className={"list"} key={i}>
-                <h4 onClick={() => {
+            return (<>
+                <div className={"list"} key={i}>
+                    <h4 onClick={() => {
 
-                    setCheckNum(i)
-                    i == checkNum ? setModal(!modal) : null
-                }}>{a}
-                    <span onClick={() => {
+                        setCheckNum(i)
+                        i == checkNum ? setModal(!modal) : null
+                    }}>{a}
+                        <span onClick={(e) => {
+                            e.stopPropagation();
+                            let up따봉 = [...따봉];
+                            up따봉[i] = 따봉[i] + 1;
+                            변경(up따봉)
+                        }}>👍</span>{따봉[i]}</h4>
+                    <button onClick={()=>{
+                        console.log(title[i]);
+                        let newTitle = [...title];
+                        console.log(newTitle);
+                        console.log(newTitle[i]);
 
-                        let up따봉 = [...따봉];
-                        up따봉[i] = 따봉[i] + 1;
-                        변경(up따봉)
-                    }}>👍</span>{따봉[i]}</h4>
+                        newTitle.splice(i, 1);
+                        setTitle(newTitle);
 
-                <p>2월 17일 발행</p>
-            </div>
-            {modal == true &&i==checkNum&& <Modal color="orange" title={title} checkNum={checkNum}/> }</>)
+                        console.log(newTitle);
+                        console.log(title);
+                    }}> 글 삭제 </button>
+                    <p>2월 17일 발행</p>
+                </div>
+                {modal == true && i == checkNum && <Modal color="orange" title={title} checkNum={checkNum}/>}</>)
         })}
 
+        <input onChange={(e) => {
+            setInsert(e.target.value)
+            console.log(insert);
+        }}/>
 
+        <button onClick={()=>{
+            setTitle([insert,...title]);
+            console.log(title);
+        }}> 발행 </button>
 
         <Foot></Foot>
 
