@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import * as React from 'react';
 import {useEffect, useState} from "react";
 
 
@@ -7,15 +8,13 @@ function App() {
 
     let post = '강남 우동 맛집';
     let [title, setTitle] = useState(['남자 코트 추천', '강남 우동 맛집', '파이썬독학']);
-    let [따봉, 변경] = useState([0, 0, 0]);
+    let [good, setGood] = useState([0, 0, 0]);
     let [modal, setModal] = useState(false);
     let [checkNum, setCheckNum] = useState(0);
     let [insert, setInsert] = useState('');
+    let today = new Date();
+    let [date, setDate] = useState(['2023.10.10.', '2023.10.10.', '2023.10.10.']);
 
-
-    function 함수() {
-        console.log(1);
-    }
 
     return (<div className="App">
         <div className={"black-nav"}>
@@ -28,34 +27,6 @@ function App() {
         }}>가나다순 정렬
         </button>
 
-        {/*<div className={"list"}>
-            <h4>{title[0]} <span onClick={() => {
-                변경(따봉 + 1)
-            }}>👍</span>{따봉[0]}</h4>
-            <button onClick={() => {
-                let copy = [...title];
-                copy[0] = '여자 코트 추천';
-                b(copy)
-            }}>클릭
-            </button>
-            <p>2월 17일 발행</p>
-        </div>
-
-
-        <div className={"list"}>
-            <h4>{title[1]}</h4>
-            <p>2월 17일 발행</p>
-        </div>
-        <div className={"list"}>
-            <h4 onClick={
-                () => {
-                    setModal(!modal)
-                }
-
-            }>{title[2]}</h4>
-            <p>2월 17일 발행</p>
-        </div>*/}
-
         {title.map(function (a, i) {
             return (<>
                 <div className={"list"} key={i}>
@@ -66,11 +37,12 @@ function App() {
                     }}>{a}
                         <span onClick={(e) => {
                             e.stopPropagation();
-                            let up따봉 = [...따봉];
-                            up따봉[i] = 따봉[i] + 1;
-                            변경(up따봉)
-                        }}>👍</span>{따봉[i]}</h4>
-                    <button onClick={()=>{
+                            let newGood = [...good];
+                            newGood[i] = good[i] + 1;
+                            setGood(newGood)
+                        }}>👍</span>{good[i]}</h4>
+                    <p>{date[i]}</p>
+                    <button onClick={() => {
                         console.log(title[i]);
                         let newTitle = [...title];
                         console.log(newTitle);
@@ -81,8 +53,8 @@ function App() {
 
                         console.log(newTitle);
                         console.log(title);
-                    }}> 글 삭제 </button>
-                    <p>2월 17일 발행</p>
+                    }}> 글 삭제
+                    </button>
                 </div>
                 {modal == true && i == checkNum && <Modal color="orange" title={title} checkNum={checkNum}/>}</>)
         })}
@@ -92,11 +64,16 @@ function App() {
             console.log(insert);
         }}/>
 
-        <button onClick={()=>{
-            setTitle([insert,...title]);
-            console.log(title);
-        }}> 발행 </button>
+        <button onClick={() => {
+            insert != '' && setTitle([insert, ...title]), setGood([0, ...good]), setDate([today.toLocaleString(), ...date]);
 
+            /*let copy = [...title];
+            copy.unshift(insert);
+            setTitle(copy);*/
+            console.log(title);
+        }}> 발행
+        </button>
+        <Modal2></Modal2>
         <Foot></Foot>
 
     </div>);
@@ -117,6 +94,25 @@ function Modal(props) {
             </button>
         </div>
     </>)
+}
+
+class Modal2 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: 'kim',
+            age: 20
+        }
+    }
+    render(){
+        return(
+            <div>안녕{this.state.age}
+                <button onClick={()=>{
+                    this.setState({age: 21})
+                }}>버튼</button>
+            </div>
+        )
+    }
 }
 
 function Foot() {
